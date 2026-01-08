@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "f2405396-9d64-4a73-abca-bb3f0d75cca4",
+		"name": "Compliance Risk Scoring API",
+		"description": "## 📌 Compliance Risk Scoring API — Overview\n\nThis collection contains APIs for a **machine learning–powered risk scoring service** built using **FastAPI and Scikit-learn**. The service evaluates transactional data in real time and assigns a **risk score and classification (LOW / MEDIUM / HIGH)**.\n\n### 🔧 What the APIs Do\n\n- **Health Check** – Verifies service availability\n    \n- **Predict (Single)** – Scores one transaction for risk\n    \n- **Predict (Batch)** – Scores multiple transactions in a single request\n    \n\n### ⚙️ Environment Setup\n\nThis collection uses a Postman environment variable:\n\n- **`baseUrl`** (example: `http://127.0.0.1:8000`)\n    \n\nSelect the **Local** environment before sending requests.  \n  \nTo change environments, update the `baseUrl` value.\n\n### 📘 API Documentation\n\nInteractive Swagger UI is available at:\n\n- **`{{baseUrl}}/docs`**\n    \n\n### 🧠 Notes\n\nThe model is trained on **synthetic transactional data** to demonstrate an end-to-end ML inference workflow, focusing on production-ready API design and backend–ML integration.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8806087"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Predict Risk (Single Transaction)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"txn_amount\": 950.0,\n  \"txn_count_24h\": 18,\n  \"account_age_days\": 12,\n  \"is_international\": 1,\n  \"device_change_7d\": 1,\n  \"failed_logins_24h\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/predict",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"predict"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Predict Risk (Batch)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"items\": [\n    {\n      \"txn_amount\": 25.5,\n      \"txn_count_24h\": 1,\n      \"account_age_days\": 900,\n      \"is_international\": 0,\n      \"device_change_7d\": 0,\n      \"failed_logins_24h\": 0\n    },\n    {\n      \"txn_amount\": 420.0,\n      \"txn_count_24h\": 7,\n      \"account_age_days\": 30,\n      \"is_international\": 1,\n      \"device_change_7d\": 1,\n      \"failed_logins_24h\": 2\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/predict_batch",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"predict_batch"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
