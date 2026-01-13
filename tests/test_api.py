@@ -3,11 +3,13 @@ from src.app import app
 
 client = TestClient(app)
 
+# Test for Health check API
 def test_health():
     r = client.get("/health")
     assert r.status_code == 200
     assert r.json() == {"status": "ok"}
 
+# Test for predict single record API
 def test_predict_single():
     payload = {
         "txn_amount": 950.0,
@@ -25,6 +27,7 @@ def test_predict_single():
     assert 0.0 <= data["risk_score"] <= 1.0
     assert data["risk_label"] in {"LOW", "MEDIUM", "HIGH"}
 
+# Test for predict multiple records API
 def test_predict_batch():
     payload = {
         "items": [
